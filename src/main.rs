@@ -11,6 +11,8 @@ use iced_async_screen_example::ui::counter::CounterTab;
 use iced_async_screen_example::ui::brand::{TestAsyncAction, TestAsyncTab};
 use iced_async_screen_example::{Message, Tab, TabId};
 
+use iced_async_screen_example::ui::grid::{self, GridTestTab};
+
 fn main() -> iced::Result {
     iced::application(
         "Sidebar example",
@@ -25,6 +27,7 @@ struct TabBarExample {
     active_tab: TabId,
     counter_tab: CounterTab,
     lista_tab: TestAsyncTab,
+    grid_tab: grid::GridTestTab,
 }
 
 impl TabBarExample {
@@ -47,12 +50,17 @@ impl TabBarExample {
                     TestAsyncAction::Run(task) => task.map(Message::AsyncTest),
                 }
             }
+            Message::GridTest(message) => {
+                self.grid_tab.update(message);
+                Task::none()
+            }
         }
     }
     fn reset_tab(&mut self, tab_id: TabId) {
         match tab_id {
             TabId::Counter => self.counter_tab = CounterTab::new().0,
             TabId::Lista => self.lista_tab = TestAsyncTab::new().0,
+            TabId::GridTest => self.grid_tab = GridTestTab::new().0,
         }
     }
 
@@ -68,6 +76,11 @@ impl TabBarExample {
                 TabId::Lista,
                 self.lista_tab.tab_label(),
                 self.lista_tab.view(),
+            )
+            .push(
+                TabId::GridTest,
+                self.grid_tab.tab_label(),
+                self.grid_tab.view(),
             )
             .set_active_tab(&self.active_tab)
             .sidebar_position(iced_aw::sidebar::SidebarPosition::Start)

@@ -11,18 +11,22 @@ use crate::ui::brand::TestAsyncMessage;
 
 use crate::ui::counter::CounterMessage;
 
-// Example code that deserializes and serializes the model.
-// extern crate serde;
-// #[macro_use]
-// extern crate serde_derive;
-// extern crate serde_json;
-//
-// use generated_module::Welcome;
-//
-// fn main() {
-//     let json = r#"{"answer": 42}"#;
-//     let model: Welcome = serde_json::from_str(&json).unwrap();
-// }
+use crate::ui::grid::GridMessage;
+#[derive(Clone, Debug)]
+pub enum Message {
+    TabSelected(TabId),
+    Counter(CounterMessage),
+    AsyncTest(TestAsyncMessage),
+    GridTest(GridMessage),
+}
+
+#[derive(Clone, PartialEq, Eq, Debug, Default)]
+pub enum TabId {
+    #[default]
+    Counter,
+    Lista,
+    GridTest,
+}
 
 use serde::{Deserialize, Serialize};
 
@@ -89,18 +93,4 @@ pub trait Tab {
     }
 
     fn content(&self) -> Element<'_, Self::Message>;
-}
-
-#[derive(Clone, Debug)]
-pub enum Message {
-    TabSelected(TabId),
-    Counter(CounterMessage),
-    AsyncTest(TestAsyncMessage),
-}
-
-#[derive(Clone, PartialEq, Eq, Debug, Default)]
-pub enum TabId {
-    #[default]
-    Counter,
-    Lista,
 }
