@@ -5,13 +5,8 @@ use iced_aw::{grid, grid_row};
 use crate::Message;
 use crate::Tab;
 
+#[derive(Default)]
 pub struct GridTestTab {}
-
-impl Default for GridTestTab {
-    fn default() -> Self {
-        Self {}
-    }
-}
 
 #[derive(Debug, Clone)]
 pub enum GridMessage {}
@@ -49,8 +44,7 @@ impl Tab for GridTestTab {
             .horizontal_alignment(iced::alignment::Horizontal::Center)
             .into();
 
-        let content: Element<'_, GridMessage> =
-            content.explain(Color::from_rgb(255.0, 0.0, 0.0)).into();
+        let content: Element<'_, GridMessage> = content.explain(Color::from_rgb(255.0, 0.0, 0.0));
         content.map(Message::GridTest)
     }
 

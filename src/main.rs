@@ -40,7 +40,7 @@ impl TabBarExample {
                 Task::none()
             }
             Message::Counter(message) => {
-                self.counter_tab.update(message);
+                let _ = self.counter_tab.update(message);
                 Task::none()
             }
             Message::AsyncTest(message) => {
@@ -51,7 +51,7 @@ impl TabBarExample {
                 }
             }
             Message::GridTest(message) => {
-                self.grid_tab.update(message);
+                let _ = self.grid_tab.update(message);
                 Task::none()
             }
         }

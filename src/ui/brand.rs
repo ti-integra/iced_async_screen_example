@@ -1,5 +1,5 @@
 use iced::widget::combo_box::State;
-use iced::widget::{button, column, combo_box, text};
+use iced::widget::{button, column, combo_box};
 use iced::{Element, Right, Task};
 use iced_aw::sidebar::TabLabel;
 use reqwest;
@@ -25,13 +25,12 @@ pub enum TestAsyncAction {
 }
 
 async fn get_data() -> Vec<WelcomeElement> {
-    let tmp = reqwest::get("https://jsonplaceholder.typicode.com/users")
+    reqwest::get("https://jsonplaceholder.typicode.com/users")
         .await
         .unwrap()
         .json::<Vec<WelcomeElement>>()
         .await
-        .unwrap();
-    tmp
+        .unwrap()
 }
 impl TestAsyncTab {
     pub fn new() -> (Self, Task<TestAsyncMessage>) {
@@ -70,7 +69,7 @@ impl Tab for TestAsyncTab {
     type Message = Message;
 
     fn title(&self) -> String {
-        (&self.text_name).clone()
+        self.text_name.clone()
     }
 
     fn tab_label(&self) -> TabLabel {
